@@ -11,11 +11,6 @@ namespace ytuyemekhane_telegram_bot.Controllers
     [Route("[controller]")]
     public class HometController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger _logger;
 
         public HometController(ILogger logger)
