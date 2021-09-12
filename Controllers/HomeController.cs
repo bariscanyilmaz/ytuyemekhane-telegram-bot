@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Telegram.Bot.Types;
+using ytuyemekhane_telegram_bot.Services.Abstract;
 
 namespace ytuyemekhane_telegram_bot.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
-    public class HometController : ControllerBase
+    [ApiController]
+    public class HomeController : ControllerBase
     {
-        private readonly ILogger _logger;
-
-        public HometController(ILogger logger)
+        [HttpPost("/bot/{token}")]
+        public async Task<IActionResult> Post([FromServices] IBotService botService, [FromBody] Update update)
         {
-            _logger = logger;
+            await botService.RecieveAsync(update);
+            return Ok();
         }
-
     }
 }
