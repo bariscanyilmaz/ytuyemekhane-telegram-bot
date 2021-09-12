@@ -14,13 +14,13 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: set token secret
-      - uses: jwsi/secret-parser@v1
+        uses: jwsi/secret-parser@v1
         with:
           filename: appsettings.json
           secret-name: BotToken
           secret-value: ${{ secrets.BotToken }}
       - name: deploy to heroku
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "ytuyemekhane-telegram-bot" #Must be unique in Heroku
