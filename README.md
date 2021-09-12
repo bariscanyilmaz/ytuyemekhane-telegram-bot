@@ -1,5 +1,5 @@
 # ytuyemekhane-telegram-bot
-Telegram Bot for YTU Dinner Hall Menu
+Telegram Bot for YTU Dining Hall Menu
 
 Runs on [Heroku](https://ytu-yemekhane-telegram-bot.herokuapp.com)
 
