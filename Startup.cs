@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
+using Telegram.Bot;
+using ytuyemekhane_telegram_bot.Options;
+using ytuyemekhane_telegram_bot.Services;
+using ytuyemekhane_telegram_bot.Services.Abstract;
 
 namespace ytuyemekhane_telegram_bot
 {
@@ -19,19 +15,29 @@ namespace ytuyemekhane_telegram_bot
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            BotConfig = configuration.GetSection("BotConfig").Get<BotConfig>();
         }
 
         public IConfiguration Configuration { get; }
+        private BotConfig BotConfig { get; }
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ApiConfig>(Configuration.GetSection("ApiConfig"));
 
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ytuyemekhane_telegram_bot", Version = "v1" });
-            });
+            services.AddHostedService<ConfigureWebhook>();
+
+            services.AddHttpClient("tgwebhook")
+                   .AddTypedClient<ITelegramBotClient>(httpClient
+                       => new TelegramBotClient(BotConfig.BotToken, httpClient));
+
+            services.AddScoped<IBotService, BotService>();
+            services.AddHttpClient<IWebClient, WebClient>();
+            services.AddMemoryCache();
+            services.AddControllers().AddNewtonsoftJson();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,19 +46,23 @@ namespace ytuyemekhane_telegram_bot
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ytuyemekhane_telegram_bot v1"));
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {
+
+                var token = BotConfig.BotToken;
+                endpoints.MapControllerRoute(name: "tgwebhook",
+                                             pattern: $"bot/{token}/",
+                                             new { controller = "Home", action = "Post" }
+                                             );
                 endpoints.MapControllers();
+
             });
         }
     }
