@@ -19,10 +19,10 @@ jobs:
           secret-name: BotToken
           secret-value: ${{ secrets.BotToken }}
       - name: Build and deploy the Docker image
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          APP_NAME: ytuyemekhane-telegram-bot
-        run: |
-          docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-          heroku container:push web -a $APP_NAME
-          heroku container:release web -a $APP_NAME
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "ytuyemekhane-telegram-bot" #Must be unique in Heroku
+          heroku_email: ${{"secrets.EMAIL"}}
+          buildpack: "https://github.com/heroku/dotnet-buildpack"
+          usedocker: true
