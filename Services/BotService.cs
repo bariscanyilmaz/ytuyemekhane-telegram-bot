@@ -86,7 +86,7 @@ namespace ytuyemekhane_telegram_bot.Services
         private async Task<Message> RedirecToSource(ITelegramBotClient bot, Message message)
         {
             return await bot.SendTextMessageAsync(chatId: message.Chat.Id,
-                                                  text: "https://github.com/bariscanyilmaz/ytuyemekhane-telegrambot",
+                                                  text: "https://github.com/bariscanyilmaz/ytuyemekhane-telegram-bot",
                                                   replyMarkup: new ReplyKeyboardRemove());
         }
     }
