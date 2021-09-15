@@ -1,7 +1,7 @@
 # ytuyemekhane-telegram-bot
 Telegram Bot for YTU Dining Hall Menu
 
-Runs on [Heroku](https://ytu-yemekhane-telegram-bot.herokuapp.com)
+Runs on [Heroku](https://heroku.com)
 
 Bot username is [ytuyemekhanebot](https://t.me/ytuyemekhanebot)
 
