@@ -14,11 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: set token secret
-        uses: jwsi/secret-parser@v1
+        uses: bariscanyilmaz/paste-secret@v1
         with:
-          filename: appsettings.json
-          secret-name: BotToken
-          secret-value: ${{ secrets.BotToken }}
+          secrets: >
+            [{"filename":"appsettings.json","keys":[{"key":"BotToken","value":"${{secrets.BotToken}}"},{"key":"HostAddress","value":"${{ secrets.HostAddress }}"},{"key":"Uri","value":"${{ secrets.Uri }}"}]}]
       - name: deploy to heroku
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
