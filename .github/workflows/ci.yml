@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: set token secret
-        uses: bariscanyilmaz/paste-secret@v1
+        uses: bariscanyilmaz/paste-secret@v1.1
         with:
           secrets: >
             [{"filename":"appsettings.json","keys":[{"key":"BotToken","value":"${{secrets.BotToken}}"},{"key":"HostAddress","value":"${{ secrets.HostAddress }}"},{"key":"Uri","value":"${{ secrets.Uri }}"}]}]
