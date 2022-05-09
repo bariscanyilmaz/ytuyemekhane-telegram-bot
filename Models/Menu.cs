@@ -17,7 +17,7 @@ namespace ytuyemekhane_telegram_bot.Models
 
         public override string ToString()
         {
-            return $"Tarih:{Date.ToString()}\nÖğlen Yemeği:11:30 - 14:30\n{string.Join("\n", Lunch)}\nAkşam Yemeği:17:30 - 20:30\n{string.Join("\n", Dinner)}";
+            return $"Tarih:{Date.ToString()}\nÖğlen Yemeği:11:30 - 14:30\n{string.Join("\n", Lunch)}\nAkşam Yemeği:16:30 - 19:15\n{string.Join("\n", Dinner)}";
         }
     }
 
